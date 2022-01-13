@@ -347,6 +347,10 @@ body {
 }
 
 @media (max-width: 745px) {
+    .header {
+        text-align: center;
+    }
+
     .header_logo {
         height: 180px;
         padding: 20px;
@@ -395,4 +399,32 @@ body {
         justify-content: center;
         align-items: center;
         flex-direction: column;
+    }
+
+    .footer {
+        font-size: 0.8rem;
+    }
+
+@media (max-width: 440px) {
+    .header_logo {
+        height: 120px;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+
+    .header_no_logo {
+        height: 140px;
+        padding: 20px;
+        margin-top: 10px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .footer {
+        font-size: 0.8rem;
     }
