@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pokédex</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <img class="header_logo" src="https://static.wikia.nocookie.net/logopedia/images/8/8c/Pok%C3%A9mon.svg/revision/latest?cb=20180728053656" alt="Pokemon Logo" />
+        <div class="header_no_logo">
+            <h1 class="header_title">Pokédex</h1>
+            <p class="header_paragraph">La pokédex creada a partir de la API "POKEAPI".</p>
+            <a class="btn_ir_al_código" href="#">Ir al código</a>
+        </div>
+    </header>
+    <div class="top_container">
+        <input type="text" name="pokemon_search" class="pokemon_search" id="input_search_pokemon" placeholder="Buscar pokemon..." />
+        <button class="btn_search_pokemon" id="btn_search_pokemon"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="pokemon_container" id="pokemon_container"></div>
+    <div class="bottom_container">
+        <button class="btn_show_more" id="btn_show_more">Mostrar mas</button>
+    </div>
+    <footer class="footer">
+        <p>Desarrollado por Esteban Elí Gómez González</p><a class="flaticon" href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">Pokeball icon created by Freepik - Flaticon</a>
+    </footer>
+
+
+
+    <div class="intro">
+        <div class="intro_content">
+            <span class="intro_hide_element"><img class="intro_pokeball_icon" src="img/pokeball.png" alt="Pokeball"></span>
+            <span class="intro_hide_element"><img class="intro_pokeball_icon" src="img/pokeball.png" alt="Pokeball"></span>
+            <span class="intro_hide_element"><img class="intro_pokeball_icon" src="img/pokeball.png" alt="Pokeball"></span>
+        </div>
+    </div>
+
+    <div class="slider"></div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script type="text/javascript" src="js/animation.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
