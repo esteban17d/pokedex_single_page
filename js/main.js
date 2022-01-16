@@ -3,6 +3,9 @@ const API_URL = 'https://pokeapi.co/api/v2'
 const pokemonContainer = document.querySelector("#pokemon_container");
 
 let offset = 0;
+let offsetAlt = 0;
+let sortBy = "";
+let sortByDir = "";
 
 const btnShowMore = document.querySelector('#btn_show_more')
 btnShowMore.addEventListener('click', function () {
@@ -68,7 +71,9 @@ const getPokemons = async (offset) => {
     const pokemons = await res.json()
     showPokemons(pokemons);
     if ((pokemons.count - offset) < 20) {
-        btnShowMore.classList.add("hide_element")
+        if (!btnShowMore.classList.contains("hide_element")) {
+            btnShowMore.classList.add("hide_element")
+        }
     }
 }
 
@@ -97,12 +102,154 @@ btnSearchPokemon.addEventListener('click', function () {
             .catch(function(err){
                 pokemonContainer.innerHTML = `<p class="not_found_p">No se ha encontrado el pokemon</p>`;
             })
-        btnShowMore.classList.add("hide_element")
+        if (!btnShowMore.classList.contains("hide_element")) {
+            btnShowMore.classList.add("hide_element")
+        }
     }
 
     if (!inputSearchPokemon.value) {
         pokemonContainer.innerHTML = "";
-        btnShowMore.classList.remove("hide_element")
+        if (btnShowMore.classList.contains('hide_element')) {
+            btnShowMore.classList.remove("hide_element")
+        }
         getPokemons(0);
     }
 } )
+
+const btnDropdown = document.querySelector("#dropdown_button")
+const itemsContainerDropdown = document.querySelector("#dropdown_items_container")
+btnDropdown.addEventListener("click", function() {
+    itemsContainerDropdown.classList.toggle('dropdown_items_container_show')
+})
+
+const quicksortMethod = (data, sortBy, direction) => {
+
+    if (data.length < 1) {
+        return [];
+    }
+
+    let subArrayLeft = [];
+    let subArrayRight = [];
+    let pivot = data[0];
+
+    if (sortBy == "name") {
+        for (let x = 1; x < data.length; x++){
+            if (direction == "asc") {
+                if (data[x].name > pivot.name) {
+                    subArrayRight.push(data[x]);
+                }
+                else {
+                    subArrayLeft.push(data[x]);
+                }
+            }
+
+            if (direction == "des") {
+                if (data[x].name < pivot.name) {
+                    subArrayRight.push(data[x]);
+                }
+                else {
+                    subArrayLeft.push(data[x]);
+                }
+            }
+        }
+    }
+
+    if (sortBy == "num") {
+        for (let x = 1; x < data.length; x++){
+            if (direction == "des") {
+                if (parseInt(data[x].id) < parseInt(pivot.id)) {
+                    subArrayRight.push(data[x]);
+                }
+                else {
+                    subArrayLeft.push(data[x]);
+                }
+            }
+        }
+    }
+    return [].concat(quicksortMethod(subArrayLeft, sortBy, direction), pivot, quicksortMethod(subArrayRight, sortBy, direction));
+}    
+
+const showPokemonsAlt = async (dataSort, offset) => {
+    for (var i = offset; i < offset + 20; i++) {
+        let res_ind = await fetch(`${API_URL}/pokemon/${dataSort[i].name}`)
+        const data = await res_ind.json()
+        renderPokemon(data)
+    }
+}
+
+const getPokemonsSort = async (sortBy, direction) => {
+    let res = await fetch(`${API_URL}/pokemon?offset=0&limit=2000`)
+    const data = await res.json()
+    let dataNoSort = data.results
+    let dataSort = quicksortMethod(dataNoSort, sortBy, direction);
+    console.log(dataSort)
+    console.log(dataSort.length - offsetAlt)
+    showPokemonsAlt(dataSort, offsetAlt);
+    if ((dataSort.length - offsetAlt) < 20) {
+        btnShowMoreAlt.classList.add("hide_element")
+    }
+    offsetAlt = offsetAlt + 20
+}
+
+const btnShowMoreAlt = document.querySelector('#btn_show_more_alt')
+btnShowMoreAlt.addEventListener('click', function () {
+    getPokemonsSort(sortBy, sortByDir);
+})
+
+
+const btnSortByNameAsc = document.querySelector("#btn_sort_by_name_asc")
+btnSortByNameAsc.addEventListener("click", async function() {
+    offsetAlt = 0;
+    offset = 0;
+    sortBy = "name"
+    sortByDir = "asc";
+    if (!btnShowMore.classList.contains("hide_element")) {
+        btnShowMore.classList.add("hide_element")
+    }
+    if (btnShowMoreAlt.classList.contains("hide_element")) {
+        btnShowMoreAlt.classList.remove("hide_element")
+    }
+    pokemonContainer.innerHTML = "";
+    getPokemonsSort(sortBy, sortByDir);
+})
+
+const btnSortByNameDes = document.querySelector("#btn_sort_by_name_des")
+btnSortByNameDes.addEventListener("click", async function() {
+    offsetAlt = 0;
+    offset = 0;
+    sortBy = "name"
+    sortByDir = "des";
+    if (!btnShowMore.classList.contains("hide_element")) {
+        btnShowMore.classList.add("hide_element")
+    }
+    if (btnShowMoreAlt.classList.contains("hide_element")) {
+        btnShowMoreAlt.classList.remove("hide_element")
+    }
+    pokemonContainer.innerHTML = "";
+    getPokemonsSort(sortBy, sortByDir);
+})
+
+const btnSortByNumAsc = document.querySelector("#btn_sort_by_num_asc")
+btnSortByNumAsc.addEventListener("click", async function() {
+    offsetAlt = 0;
+    offset = 0;
+    pokemonContainer.innerHTML = "";
+    getPokemons(offset);
+})
+
+const btnSortByNumDes = document.querySelector("#btn_sort_by_num_des")
+btnSortByNumDes.addEventListener("click", async function() {
+    offsetAlt = 0;
+    offset = 0;
+    sortBy = "num"
+    sortByDir = "des";
+    if (!btnShowMore.classList.contains("hide_element")) {
+        btnShowMore.classList.add("hide_element")
+    }
+    if (btnShowMoreAlt.classList.contains("hide_element")) {
+        btnShowMoreAlt.classList.remove("hide_element")
+    }
+    pokemonContainer.innerHTML = "";
+    getPokemonsSort(sortBy, sortByDir);
+})
+

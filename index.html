@@ -17,12 +17,26 @@
         </div>
     </header>
     <div class="top_container">
-        <input type="text" name="pokemon_search" class="pokemon_search" id="input_search_pokemon" placeholder="Buscar pokemon..." />
-        <button class="btn_search_pokemon" id="btn_search_pokemon"><i class="fas fa-search"></i></button>
+        <div class="pokemon_search_container">
+            <input type="text" name="pokemon_search" class="pokemon_search" id="input_search_pokemon" placeholder="Buscar pokemon..." />
+            <button class="btn_search_pokemon" id="btn_search_pokemon"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="top_container_buttons">
+            <div class="dropdown_container">
+                <button class="dropdown_button" id="dropdown_button">Ordenar por <i class="fas fa-sort-down"></i></button>
+                <div class="dropdown_items_container" id="dropdown_items_container">
+                    <button class="dropdown_item" id="btn_sort_by_name_asc">Nombre (ascendente)</button>
+                    <button class="dropdown_item" id="btn_sort_by_name_des">Nombre (descendente)</button>
+                    <button class="dropdown_item" id="btn_sort_by_num_asc">Numero (ascendente)</button>
+                    <button class="dropdown_item" id="btn_sort_by_num_des">Numero (descendente)</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="pokemon_container" id="pokemon_container"></div>
     <div class="bottom_container">
         <button class="btn_show_more" id="btn_show_more">Mostrar mas</button>
+        <button class="btn_show_more hide_element" id="btn_show_more_alt">Mostrar mas</button>
     </div>
     <footer class="footer">
         <p>Desarrollado por Esteban Elí Gómez González</p><a class="flaticon" href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">Pokeball icon created by Freepik - Flaticon</a>
